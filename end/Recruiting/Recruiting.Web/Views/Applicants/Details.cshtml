@@ -1,0 +1,29 @@
+﻿@model ApplicantDetails
+@{
+}
+
+
+<h2>@Model.Applicant.FulllName</h2>
+<div class="mb-2 mt-2">
+    <div>
+        Email: @Model.Applicant.Email
+    </div>
+    <div>
+        Adress: 
+        <div class="ml-3">
+            @Model.Applicant.Adress1 <br />
+            @if (!String.IsNullOrEmpty(@Model.Applicant.Adress2))
+            {
+                @Model.Applicant.Adress2 <br />
+            }
+            @Model.Applicant.ZipCode @Model.Applicant.City <br />
+            @Model.Applicant.Country
+        </div>
+    </div>
+</div>
+<a asp-action="Edit" asp-controller="Applicants" asp-route-id="@Model.Applicant.ApplicantId" class="btn btn-primary">Edit Applicant</a>
+<a asp-action="List" asp-controller="Applicants" class="btn btn-secondary">Back to the Applicants' list</a>
+@if (!String.IsNullOrEmpty(Model.Message))
+{
+    <div class="mt-2 alert alert-info">@Model.Message</div>
+}
