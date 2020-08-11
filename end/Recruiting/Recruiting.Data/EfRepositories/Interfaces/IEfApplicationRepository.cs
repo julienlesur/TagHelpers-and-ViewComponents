@@ -7,7 +7,8 @@ namespace Recruiting.Data.EfRepositories.Interfaces
 {
     public interface IEfApplicationRepository
     {
-        public Task<IList<EfApplication>> GetApplicationListByJobReference(string jobReference);
+        public Task<ICollection<EfApplication>> GetApplicationListByJobReference(string jobReference);
         public Task<EfApplication> AddAsync(EfApplication newApplication);
+        Task<ICollection<EfApplication>> GetListByIdApplicant(int applicantId);
     }
 }

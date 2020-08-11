@@ -20,6 +20,15 @@ namespace Recruiting.BL.Mappers
                 JobTitle = entity.Job.Title,
                 ApplicationDate = entity.ApplicationDate
             };
+        public static IEnumerable<Application> MapListEntityToListDomain(IEnumerable<EfApplication> entities)
+        {
+            ICollection<Application> applications = new List<Application>();
+            foreach(var entity in entities)
+            {
+                applications.Add(MapEntityToDomain(entity));
+            }
+            return applications;
+        }
 
 
     }

@@ -5,6 +5,7 @@ using Recruiting.Data.EfModels;
 using Recruiting.Data.EfRepositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Recruiting.BL.Services
@@ -16,6 +17,7 @@ namespace Recruiting.BL.Services
         private readonly IEfJobRepository _efJobRepository;
         private readonly Func<IEnumerable<EfApplicant>, IList<Applicant>> _mapListEntityToListDomain;
         private readonly Func<EfApplication, Application> _mapApplicationEntityToDomain;
+        private readonly Func<IEnumerable<EfApplication>, IEnumerable<Application>> _mapApplicationListEntityToListDomain;
 
         public ApplicantService(IEfApplicantRepository efApplicantRepository,
                                     IEfApplicationRepository efApplicationRepository,
@@ -28,6 +30,8 @@ namespace Recruiting.BL.Services
             _efJobRepository = efJobRepository;
             _mapListEntityToListDomain = ApplicantMapper.MapListEntityToListDomain;
             _mapApplicationEntityToDomain = ApplicationMapper.MapEntityToDomain;
+            _mapApplicationListEntityToListDomain = ApplicationMapper.MapListEntityToListDomain;
+
         }
 
         public async Task<Applicant> AddAsync(Applicant applicant, string jobReference)
@@ -71,6 +75,12 @@ namespace Recruiting.BL.Services
             {
                 return await GetApplicantsByJobReference(jobReference);
             }
+        }
+
+        public async Task<IEnumerable<Application>> GetApplicationsByIdApplicant(int applicantId)
+        {
+            var efApplications = await _efApplicationRepository.GetListByIdApplicant(applicantId);
+            return _mapApplicationListEntityToListDomain(efApplications);
         }
 
         private async Task<IEnumerable<Applicant>> GetApplicantsByJobReference(string jobReference)
