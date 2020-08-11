@@ -20,6 +20,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().Location)
                 </th>
+                <th>
+
+                </th>
                 <th class="d-flex justify-content-center">
                     <a class="btn btn-sm" asp-controller="Jobs" asp-action="Add" title="Add job">
                         <i class="fas fa-plus text-white"></i>
@@ -42,6 +45,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => job.Location)
+                </td>
+                <td>
+                    <job-applicant-list job-reference="@job.Reference"></job-applicant-list>
                 </td>
                 <td class="d-flex justify-content-center">
                     <a class="btn btn-sm" asp-controller="Jobs" asp-action="Details" asp-route-id="@job.JobId" title="Details Job">

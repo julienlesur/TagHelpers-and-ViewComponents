@@ -2,6 +2,7 @@
 using Recruiting.Data.Data;
 using Recruiting.Data.EfModels;
 using Recruiting.Data.EfRepositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace Recruiting.Data.EfRepositories
         public EfApplicantRepository(RecruitingContext context) : base(context)
         {
         }
+
         public async Task<EfApplication> GetLastApplicationByApplicantId(int applicantId)
         {
             return await _context.Applications

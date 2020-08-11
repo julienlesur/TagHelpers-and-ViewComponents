@@ -30,6 +30,7 @@ namespace Recruiting.Web
                 .AddEfRepositories()
                 .AddServices()
                 .AddHttpServices();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

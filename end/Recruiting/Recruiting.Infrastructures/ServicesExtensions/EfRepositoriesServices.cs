@@ -9,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             services.AddScoped<IEfJobRepository, EfJobRepository>();
             services.AddScoped<IEfApplicantRepository, EfApplicantRepository>();
+            services.AddScoped<IEfApplicationRepository, EfApplicationRepository>();
             services.AddScoped<IEfUnitRepository, EfUnitRepository>();
 
             return services;

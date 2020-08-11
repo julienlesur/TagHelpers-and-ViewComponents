@@ -10,5 +10,6 @@ namespace Recruiting.BL.Services.Interfaces
     {
         public Task<IEnumerable<Job>> GetJobs();
         public bool IsReferenceUnique(int id, string reference);
+        public Task<int> GetNumberOfApplicationsByJobReference(string reference);
     }
 }

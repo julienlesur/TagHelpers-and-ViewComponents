@@ -27,6 +27,9 @@ namespace Recruiting.BL.Services
             return _mapListEntityToListDomain(efJobs);
         }
 
+        public async Task<int> GetNumberOfApplicationsByJobReference(string reference)
+            => await _efJobRepository.GetNumberOfApplicationsByJobReference(reference);
+
         public bool IsReferenceUnique(int id, string reference)
             => _efJobRepository.IsReferenceUnique(id, reference);
     }
