@@ -33,7 +33,7 @@ namespace Recruiting.BL.Models
         [Required]
         public string Country { get; set; }
 
-        public string DisplayApplicationTitle { get; set; }
+        public string ApplicationReference { get; set; }
 
         public IList<Application> Applications { get; set; }
 

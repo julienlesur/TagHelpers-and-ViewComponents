@@ -51,7 +51,7 @@
                         @Html.DisplayFor(modelItem => applicant.Country)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => applicant.DisplayApplicationTitle)
+                        <job-link job-reference="@applicant.ApplicationReference"></job-link>
                     </td>
                     <td class="d-flex justify-content-center">
                         <a class="btn btn-sm" asp-controller="Applicants" asp-action="Details" asp-route-id="@applicant.ApplicantId" asp-route-jobReference="@jobReference" title="Details applicant">
