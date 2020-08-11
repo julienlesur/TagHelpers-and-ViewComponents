@@ -13,9 +13,13 @@ namespace Recruiting.Data.EfRepositories
         {
         }
 
+        public async Task<EfJob> GetJobByReference(string jobReference)
+        =>
+             await _context.Jobs.SingleOrDefaultAsync(j => j.Reference == jobReference);
+
         public async Task<int> GetJobIdByReference(string jobReference)
         {
-            var job = await _context.Jobs.SingleOrDefaultAsync(j => j.Reference == jobReference);
+            var job = await GetJobByReference(jobReference);
             if (job != null)
             {
                 return job.Id;

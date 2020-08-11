@@ -80,7 +80,7 @@ namespace Recruiting.BL.Services
             foreach(var application in applications)
             {
                 var applicant = _mapEntityToDomain(application.Applicant);
-                applicant.DisplayApplicationTitle = application.Job.Reference;
+                applicant.ApplicationReference = application.Job.Reference;
                 applicants.Add(applicant);
             }
 
@@ -93,7 +93,7 @@ namespace Recruiting.BL.Services
             foreach (var applicant in applicants)
             {
                 var lastApplication = await GetApplicantLastApplication(applicant.ApplicantId);
-                applicant.DisplayApplicationTitle = lastApplication.JobTitleAndRef;
+                applicant.ApplicationReference = lastApplication.JobReference;
             }
             return applicants;
         }

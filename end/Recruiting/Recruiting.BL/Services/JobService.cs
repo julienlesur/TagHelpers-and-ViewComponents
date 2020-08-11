@@ -21,6 +21,17 @@ namespace Recruiting.BL.Services
             _efJobRepository = efJobRepository;
             _mapListEntityToListDomain = JobMapper.MapListEntityToListDomain;
         }
+
+        public async Task<(int Id, string Title)?> GetIdAndTitleByReference(string jobReference)
+        {
+            var job = await _efJobRepository.GetJobByReference(jobReference);
+            if (job != null)
+            {
+                return (job.Id, job.Title);
+            }
+            return null;
+        }
+
         public async Task<IEnumerable<Job>> GetJobs()
         {
             IEnumerable<EfJob> efJobs = await _efJobRepository.ListAsync();
