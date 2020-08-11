@@ -1,6 +1,7 @@
 ﻿@model Applicant
 
 @{
+    var jobReference = ViewData["JobReference"]?.ToString();
 }
 
 @if (Model.ApplicantId > 0)
@@ -16,6 +17,7 @@ else
 
 <form method="post">
     <input type="hidden" asp-for="ApplicantId" />
+    <input type="hidden" name="jobReference" value="@jobReference"/>
     <div class="form-group">
         <label asp-for="FirstName"></label>
         <input type="text" asp-for="FirstName" class="form-control" />
@@ -57,7 +59,7 @@ else
         <span class="text-danger" asp-validation-for="Country   "></span>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
-    <a class="btn btn-secondary" asp-controller="Applicants" asp-action="List">Back to the applicants' list</a>
+    <a class="btn btn-secondary" asp-controller="Applicants" asp-action="List" asp-route-jobReference="@jobReference">Back to the applicants' list</a>
 </form>
 
 @section Scripts{

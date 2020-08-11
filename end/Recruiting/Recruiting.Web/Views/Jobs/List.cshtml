@@ -47,7 +47,6 @@
                     @Html.DisplayFor(modelItem => job.Location)
                 </td>
                 <td>
-                    <a asp-controller="Applicants" asp-action="List" asp-route-job-reference="RTHNLS">Go</a>
                     <job-applicant-list job-reference="@job.Reference"></job-applicant-list>
                 </td>
                 <td class="d-flex justify-content-center">

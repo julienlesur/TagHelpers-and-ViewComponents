@@ -20,23 +20,30 @@ namespace Recruiting.Web.Controllers
         public async Task<IActionResult> List(string jobReference)
         {
             IEnumerable<Applicant> applicants = await _applicantService.GetApplicantList(jobReference);
-            
-            return View(applicants);
+            ViewData["jobReference"] = jobReference ?? "";
+
+            return View(new ApplicantList { 
+                Applicants = applicants,
+                ListTitle = String.IsNullOrEmpty(jobReference) ? "Current applicants" : jobReference + " applicants",
+                JobColumnTitle = String.IsNullOrEmpty(jobReference) ? "Last application" : "Application"
+            });
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string jobReference)
         {
             Applicant applicant = await _applicantService.FindByIdAsync(id);
             if (Applicant.IsEmpty(applicant))
             {
                 return RedirectToAction(nameof(ApplicantNotFound));
             }
+            ViewData["jobReference"] = jobReference ?? "";
             return View(new ApplicantDetails { Applicant = applicant, Message = (TempData["Message"] ?? "").ToString() });
         }
 
 
-        public IActionResult Add()
+        public IActionResult Add(string jobReference)
         {
+            ViewData["jobReference"] = jobReference ?? "";
             return View("Edit", Applicant._EmptyApplicant);
         }
 
@@ -53,26 +60,27 @@ namespace Recruiting.Web.Controllers
             return View("Edit", new { id = applicant.ApplicantId });
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int id, string jobReference)
         {
             var applicant = await _applicantService.FindByIdAsync(id);
             if (Applicant.IsEmpty(applicant))
             {
                 return RedirectToAction(nameof(ApplicantNotFound));
             }
+            ViewData["JobReference"] = jobReference ?? "";
 
             return View(applicant);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ApplicantId, FirstName, LastName, Email, Adress1, Adress2, ZipCode, City, Country")] Applicant applicant)
+        public async Task<IActionResult> Edit(int id, [Bind("ApplicantId, FirstName, LastName, Email, Adress1, Adress2, ZipCode, City, Country")] Applicant applicant, string jobReference)
         {
             if (ModelState.IsValid)
             {
                 var updatedApplicant = await _applicantService.UpdateAsync(applicant);
                 TempData["Message"] = "The applicant has been succesfully saved";
-                return RedirectToAction(nameof(Details), new { id = updatedApplicant.ApplicantId });
+                return RedirectToAction(nameof(Details), new { id = updatedApplicant.ApplicantId, jobReference = jobReference });
             }
             return View(applicant);
         }

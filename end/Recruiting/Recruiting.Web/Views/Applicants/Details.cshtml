@@ -1,5 +1,6 @@
 ﻿@model ApplicantDetails
 @{
+    var jobReference = ViewData["JobReference"]?.ToString();
 }
 
 
@@ -21,8 +22,8 @@
         </div>
     </div>
 </div>
-<a asp-action="Edit" asp-controller="Applicants" asp-route-id="@Model.Applicant.ApplicantId" class="btn btn-primary">Edit Applicant</a>
-<a asp-action="List" asp-controller="Applicants" class="btn btn-secondary">Back to the Applicants' list</a>
+<a asp-action="Edit" asp-controller="Applicants" asp-route-id="@Model.Applicant.ApplicantId" asp-route-jobReference="@jobReference" class="btn btn-primary">Edit Applicant</a>
+<a asp-action="List" asp-controller="Applicants" asp-route-jobReference="@jobReference" class="btn btn-secondary">Back to the Applicants' list</a>
 @if (!String.IsNullOrEmpty(Model.Message))
 {
     <div class="mt-2 alert alert-info">@Model.Message</div>

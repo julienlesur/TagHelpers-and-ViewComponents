@@ -1,5 +1,7 @@
-﻿@model IEnumerable<Applicant>
+﻿@model ApplicantList
+
 @{
+    var jobReference = ViewData["JobReference"]?.ToString();
 }
 
 
@@ -11,19 +13,19 @@
         <thead>
             <tr class="table-primary">
                 <th>
-                    @Html.DisplayNameFor(model => model.FulllName)
+                    @Html.DisplayNameFor(model => model.Applicants.FirstOrDefault().FulllName)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Email)
+                    @Html.DisplayNameFor(model => model.Applicants.FirstOrDefault().Email)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.City)
+                    @Html.DisplayNameFor(model => model.Applicants.FirstOrDefault().City)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Country)
+                    @Html.DisplayNameFor(model => model.Applicants.FirstOrDefault().Country)
                 </th>
                 <th>
-                    Last Application
+                    @Model.JobColumnTitle
                 </th>
                 <th class="d-flex justify-content-center">
                     <a class="btn btn-sm" asp-controller="Applicants" asp-action="Add" title="Add applicant">
@@ -33,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var applicant in Model)
+            @foreach (var applicant in Model.Applicants)
             {
                 <tr>
                     <td>
@@ -52,10 +54,10 @@
                         @Html.DisplayFor(modelItem => applicant.DisplayApplicationTitle)
                     </td>
                     <td class="d-flex justify-content-center">
-                        <a class="btn btn-sm" asp-controller="Applicants" asp-action="Details" asp-route-id="@applicant.ApplicantId" title="Details applicant">
+                        <a class="btn btn-sm" asp-controller="Applicants" asp-action="Details" asp-route-id="@applicant.ApplicantId" asp-route-jobReference="@jobReference" title="Details applicant">
                             <i class="fas fa-info-circle"></i>
                         </a>
-                        <a class="btn btn-sm" asp-controller="Applicants" asp-action="Edit" asp-route-id="@applicant.ApplicantId" title="Edit applicant">
+                        <a class="btn btn-sm" asp-controller="Applicants" asp-action="Edit" asp-route-id="@applicant.ApplicantId" asp-route-jobReference="@jobReference" title="Edit applicant">
                             <i class="fas fa-pen"></i>
                         </a>
                         <form class="delete-job" asp-action="Delete" asp-controller="Applicants" asp-route-id="@applicant.ApplicantId" method="post" onclick="return confirm('Do you really want to delete this applicant?')">
