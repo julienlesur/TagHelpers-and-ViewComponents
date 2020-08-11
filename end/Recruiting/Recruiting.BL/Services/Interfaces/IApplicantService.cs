@@ -10,5 +10,6 @@ namespace Recruiting.BL.Services.Interfaces
     {
         Task<Application> GetApplicantLastApplication(int applicantId);
         Task<IEnumerable<Applicant>> GetApplicantList(string jobReference);
+        Task<Applicant> AddAsync(Applicant applicant, string jobReference);
     }
 }

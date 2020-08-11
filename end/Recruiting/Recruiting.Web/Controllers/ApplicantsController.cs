@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Recruiting.BL.Models;
 using Recruiting.BL.Services.Interfaces;
 using Recruiting.Web.Models.ViewModels;
+using Recruiting.Infrastructures.ActionFilters;
 
 namespace Recruiting.Web.Controllers
 {
@@ -17,10 +18,11 @@ namespace Recruiting.Web.Controllers
         {
             _applicantService = applicantService;
         }
+
+        [JobReference]
         public async Task<IActionResult> List(string jobReference)
         {
             IEnumerable<Applicant> applicants = await _applicantService.GetApplicantList(jobReference);
-            ViewData["jobReference"] = jobReference ?? "";
 
             return View(new ApplicantList { 
                 Applicants = applicants,
@@ -29,6 +31,7 @@ namespace Recruiting.Web.Controllers
             });
         }
 
+        [JobReference]
         public async Task<IActionResult> Details(int id, string jobReference)
         {
             Applicant applicant = await _applicantService.FindByIdAsync(id);
@@ -36,30 +39,30 @@ namespace Recruiting.Web.Controllers
             {
                 return RedirectToAction(nameof(ApplicantNotFound));
             }
-            ViewData["jobReference"] = jobReference ?? "";
             return View(new ApplicantDetails { Applicant = applicant, Message = (TempData["Message"] ?? "").ToString() });
         }
 
 
+        [JobReference]
         public IActionResult Add(string jobReference)
         {
-            ViewData["jobReference"] = jobReference ?? "";
             return View("Edit", Applicant._EmptyApplicant);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Add([Bind("FirstName, LastName, Email, Adress1, Adress2, ZipCode, City, Country")] Applicant applicant)
+        public async Task<IActionResult> Add([Bind("FirstName, LastName, Email, Adress1, Adress2, ZipCode, City, Country")] Applicant applicant, string jobReference)
         {
             if (ModelState.IsValid)
             {
-                var newApplicant = await _applicantService.AddAsync(applicant);
+                var newApplicant = await _applicantService.AddAsync(applicant, jobReference);
                 TempData["Message"] = "The applicant has been succesfully added";
-                return RedirectToAction(nameof(Details), new { id = newApplicant.ApplicantId });
+                return RedirectToAction(nameof(Details), new { id = newApplicant.ApplicantId, jobReference = jobReference });
             }
-            return View("Edit", new { id = applicant.ApplicantId });
+            return View("Edit", new { id = applicant.ApplicantId, jobReference = jobReference });
         }
 
+        [JobReference]
         public async Task<IActionResult> Edit(int id, string jobReference)
         {
             var applicant = await _applicantService.FindByIdAsync(id);
@@ -67,7 +70,6 @@ namespace Recruiting.Web.Controllers
             {
                 return RedirectToAction(nameof(ApplicantNotFound));
             }
-            ViewData["JobReference"] = jobReference ?? "";
 
             return View(applicant);
         }
