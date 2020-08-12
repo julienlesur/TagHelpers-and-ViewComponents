@@ -1,0 +1,12 @@
+﻿
+@model IEnumerable<Applicant>
+
+@{
+}
+
+    <ul class="list-group">
+        @foreach (var applicant in Model)
+        {
+            <li class="list-group-item">@applicant.FulllName</li>
+        }
+    </ul>

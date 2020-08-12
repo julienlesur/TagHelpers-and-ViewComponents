@@ -6,7 +6,10 @@
 
 <h2>@Model.Applicant.FulllName</h2>
 <div class="row">
-    <div class="col-6 mb-2 mt-2">
+    <div class="col-2">
+        @await Component.InvokeAsync("ApplicantsShortList", new { applicantId = Model.Applicant.ApplicantId })
+    </div>
+    <div class="col-4 mb-2 mt-2">
         <div>
             Email: @Model.Applicant.Email
         </div>
