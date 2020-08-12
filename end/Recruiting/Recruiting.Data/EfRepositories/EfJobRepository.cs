@@ -2,6 +2,7 @@
 using Recruiting.Data.Data;
 using Recruiting.Data.EfModels;
 using Recruiting.Data.EfRepositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,6 +26,12 @@ namespace Recruiting.Data.EfRepositories
                 return job.Id;
             }
             return 0;
+        }
+
+        public async Task<IEnumerable<EfJob>> GetJobsNotIn(List<int> idsJob)
+        {
+            var jobs = await _context.Jobs.Where(j => !idsJob.Contains(j.Id)).ToListAsync();
+            return jobs;
         }
 
         public async Task<int> GetNumberOfApplicationsByJobReference(string jobReference)

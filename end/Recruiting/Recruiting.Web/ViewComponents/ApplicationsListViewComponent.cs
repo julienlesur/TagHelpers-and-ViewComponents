@@ -9,21 +9,22 @@ namespace Recruiting.Web.ViewComponents
 {
     public class ApplicationsListViewComponent : ViewComponent
     {
-        private readonly IApplicantService _applicantService;
+        private readonly IApplicationService _applicationService;
 
-        public ApplicationsListViewComponent(IApplicantService applicantService)
+        public ApplicationsListViewComponent(IApplicationService applicationService)
         {
-            _applicantService = applicantService;
+            _applicationService = applicationService;
         }
         public async Task<IViewComponentResult> InvokeAsync(
             int applicantId)
         {
-            IEnumerable<Application> applications = await _applicantService.GetApplicationsByIdApplicant(applicantId);
+            IEnumerable<Application> applications = await _applicationService.GetApplicationsByIdApplicant(applicantId);
 
             ApplicationList applicationList = new ApplicationList
             {
                 Applications = applications,
-                ApplicantId = applicantId
+                ApplicantId = applicantId,
+                Jobs = await _applicationService.GetJobsWithoutApplication(applicantId)
             };
 
             return View(applicationList);

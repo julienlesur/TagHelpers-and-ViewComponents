@@ -34,3 +34,9 @@
 {
     <div class="mt-2 alert alert-info">@Model.Message</div>
 }
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/ApplicationList.js"></script>
+}

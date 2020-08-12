@@ -1,4 +1,5 @@
-﻿using Recruiting.BL.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Recruiting.BL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Recruiting.Web.Models.ViewModels
     {
         public IEnumerable<Application> Applications { get; set; }
         public int ApplicantId { get; set; }
+        public IEnumerable<SelectListItem> Jobs { get; set; }
     }
 }

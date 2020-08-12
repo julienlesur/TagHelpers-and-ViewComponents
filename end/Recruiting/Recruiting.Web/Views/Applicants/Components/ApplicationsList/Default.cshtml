@@ -4,7 +4,7 @@
 }
 
 <div class="table-responsive">
-    <table class="table table-striped table-dark">
+    <table id="table-applications" class="table table-striped table-dark">
         <thead>
             <tr class="table-primary">
                 <th>
@@ -17,9 +17,9 @@
                     @Html.DisplayNameFor(model => model.Applications.FirstOrDefault().ApplicationDate)
                 </th>
                 <th class="d-flex justify-content-center">
-                    <a class="btn btn-sm" asp-controller="Applications" asp-action="Add" title="Add application" asp-route-applicantId="@Model.ApplicantId">
-                        <i class="fas fa-plus text-white"></i>
-                    </a>
+                    <button type="submit" class="btn-invisible">
+                        <i class="fas fa-plus-square btn btn-primary" id="icon-create" title="Add application"></i>
+                    </button>
                 </th>
             </tr>
         </thead>
@@ -48,5 +48,31 @@
                 </tr>
             }
         </tbody>
+    </table>
+</div>
+
+<div style="display:none">
+    <table id="sample-table">
+        <tr class="sample-edit-row">
+            <td colspan="4">
+                <form id="form-application" class="form-application" method="post" asp-controller="Applications" asp-action="Create">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@Model.ApplicantId" />
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" class="hidden-product" name="ProductId" />
+                        <select name="JobId"class="form-control" asp-items="@Model.Jobs"></select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn-invisible" title="save application">
+                            <i class="btn fas fa-save icon-save"></i>
+                        </button>
+                        <a class="btn-invisible btn-cancel-edit" title="cancel">
+                            <i class="btn fas fa-times"></i>
+                        </a>
+                    </div>
+                </form>
+            </td>
+        </tr>
     </table>
 </div>
