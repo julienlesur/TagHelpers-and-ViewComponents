@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Recruiting.BL.Models;
 using Recruiting.BL.Services.Interfaces;
@@ -32,6 +33,12 @@ namespace Recruiting.Web.Controllers
         {
             await _applicationService.DeleteAsync(applicantId, jobId);
             return Ok();
+        }
+
+        [Route("{controller}/{action}/{applicantId}")]
+        public async Task<IEnumerable<SelectListItem>> GetApplicantJobsWithoutApplication(int applicantId)
+        {
+            return await _applicationService.GetJobsWithoutApplication(applicantId);
         }
     }
 }

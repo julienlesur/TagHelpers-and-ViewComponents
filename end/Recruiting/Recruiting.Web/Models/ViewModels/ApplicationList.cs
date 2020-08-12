@@ -11,6 +11,5 @@ namespace Recruiting.Web.Models.ViewModels
     {
         public IEnumerable<Application> Applications { get; set; }
         public int ApplicantId { get; set; }
-        public IEnumerable<SelectListItem> Jobs { get; set; }
     }
 }

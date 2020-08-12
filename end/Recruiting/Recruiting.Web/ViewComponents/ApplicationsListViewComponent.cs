@@ -23,8 +23,7 @@ namespace Recruiting.Web.ViewComponents
             ApplicationList applicationList = new ApplicationList
             {
                 Applications = applications,
-                ApplicantId = applicantId,
-                Jobs = await _applicationService.GetJobsWithoutApplication(applicantId)
+                ApplicantId = applicantId
             };
 
             return View(applicationList);

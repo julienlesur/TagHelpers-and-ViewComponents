@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     $(document).on("click", "#icon-create", showRowNewApplication);
+    $(document).on("click", ".btn-cancel-edit", removeEditRow);
     $(document).on("submit", ".form-application", function (event) {
         event.preventDefault();
         createApplication($(this));
@@ -13,8 +14,20 @@
 function showRowNewApplication() {
     var newApplication = $('.sample-edit-row').clone();
     var form = newApplication.find('#form-application');
+    debugger
+    var applicantId = form.find('input#ApplicantId').val();
+    $.get('/Applications/GetApplicantJobsWithoutApplication/' + applicantId,
+        function (items) {
+            var options = '';
+            $.each(items, function (index, item) {
+                options += "<option value='" + item.value + "'>" + item.text + "</option>";
+            });
+            var selectJob = form.find('select#JobId');
+            selectJob.append(options);
 
-    $('#table-applications tbody').prepend(newApplication);
+            $('#table-applications tbody').prepend(newApplication);
+    });
+
 }
 
 function createApplication($form) {
@@ -57,5 +70,16 @@ function deleteApplication($form) {
 }
 
 function removeEditRow() {
+    $('#table-applications .sample-edit-row select#JobId').empty();
     $('#table-applications .sample-edit-row').remove();
+} 
+
+function FillSelectJobs(applicantId) {
+    $.ajax({
+        url: '/Applications/GetApplicantJobsWithoutApplication/' + applicantId,
+        type: 'get'
+    }).done(function (data) {
+        debugger;
+        alert(options);
+    });
 }
