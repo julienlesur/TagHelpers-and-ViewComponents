@@ -24,6 +24,15 @@ namespace Recruiting.Data.EfRepositories
             return newApplication;
         }
 
+        public async Task DeleteAsync(int applicantId, int jobId)
+        {
+            var application = await _context.Applications.SingleOrDefaultAsync(app => app.ApplicantId == applicantId && app.JobId == jobId);
+            if (application != null)
+            {
+                _context.Remove(application);
+            }
+        }
+
         public async Task<ICollection<EfApplication>> GetApplicationListByJobReference(string jobReference)
         =>
             await _context.Applications

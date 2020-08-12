@@ -17,9 +17,9 @@
                     @Html.DisplayNameFor(model => model.Applications.FirstOrDefault().ApplicationDate)
                 </th>
                 <th class="d-flex justify-content-center">
-                    <button type="submit" class="btn-invisible">
-                        <i class="fas fa-plus-square btn btn-primary" id="icon-create" title="Add application"></i>
-                    </button>
+                    <a class="btn btn-sm">
+                        <i class="fas fa-plus text-white" id="icon-create" title="Add application"></i>
+                    </a>
                 </th>
             </tr>
         </thead>
@@ -38,9 +38,9 @@
                     </td>
                     <td class="d-flex justify-content-center">
                         <form class="delete-application" asp-action="Delete" asp-controller="Applications" method="post" onclick="return confirm('Do you really want to delete this application?')">
-                            <input type="hidden" asp-for="@application.ApplicantId" />
-                            <input type="hidden" asp-for="@application.JobId" />
-                            <button type="submit" class="btn btn-sm" title="Delete job">
+                            <input type="hidden" name="applicantId" value="@application.ApplicantId" />
+                            <input type="hidden" name="jobId" value="@application.JobId" />
+                            <button type="submit" class="btn btn-sm" title="Delete application">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </form>
@@ -53,21 +53,39 @@
 
 <div style="display:none">
     <table id="sample-table">
+        <tr class="sample-row">
+            <td>
+                <job-title />
+            </td>
+            <td>
+                <job-reference/>
+            </td>
+            <td>
+                <application-date />
+            </td>
+            <td class="d-flex justify-content-center">
+                <form class="delete-application" asp-action="Delete" asp-controller="Applications" method="post" onclick="return confirm('Do you really want to delete this application?')">
+                    <input type="hidden" asp-for="@Model.ApplicantId" />
+                    <button type="submit" class="btn btn-sm" title="Delete application">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
         <tr class="sample-edit-row">
             <td colspan="4">
-                <form id="form-application" class="form-application" method="post" asp-controller="Applications" asp-action="Create">
+                <form id="form-application" class="form-application" method="post" asp-controller="Applications" asp-action="Add">
                     <div class="form-group">
                         <input type="hidden" asp-for="@Model.ApplicantId" />
                     </div>
                     <div class="form-group">
-                        <input type="hidden" class="hidden-product" name="ProductId" />
-                        <select name="JobId"class="form-control" asp-items="@Model.Jobs"></select>
+                        <select name="JobId" class="form-control" asp-for="@Model.Applications.FirstOrDefault().JobId" asp-items="@Model.Jobs"></select>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn-invisible" title="save application">
+                        <button type="submit" class="btn btn-sm" title="save application">
                             <i class="btn fas fa-save icon-save"></i>
                         </button>
-                        <a class="btn-invisible btn-cancel-edit" title="cancel">
+                        <a class="btn btn-sm btn-cancel-edit" title="cancel">
                             <i class="btn fas fa-times"></i>
                         </a>
                     </div>

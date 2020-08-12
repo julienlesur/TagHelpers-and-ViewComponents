@@ -11,5 +11,7 @@ namespace Recruiting.BL.Services.Interfaces
     {
         Task<IEnumerable<Application>> GetApplicationsByIdApplicant(int applicantId);
         Task<IEnumerable<SelectListItem>> GetJobsWithoutApplication(int applicantId);
+        Task<Application> AddAsync(Application application);
+        Task DeleteAsync(int applicantId, int jobId);
     }
 }
