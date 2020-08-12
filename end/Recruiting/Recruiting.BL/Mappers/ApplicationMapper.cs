@@ -15,12 +15,32 @@ namespace Recruiting.BL.Mappers
             new Application
             {
                 ApplicantId = entity.ApplicantId,
-                ApplicantFullName = ApplicantMapper.MapEntityToDomain(entity.Applicant).FulllName,
-                JobReference = entity.Job.Reference,
-                JobTitle = entity.Job.Title,
-                ApplicationDate = entity.ApplicationDate
+                ApplicantFullName = entity.Applicant != null ? ApplicantMapper.MapEntityToDomain(entity.Applicant).FulllName : String.Empty,
+                JobId = entity.JobId,
+                JobReference = entity.Job?.Reference ?? String.Empty,
+                JobTitle = entity.Job?.Title ?? String.Empty,
+                ApplicationDate = entity.ApplicationDate.ToShortDateString()
             };
+        public static IEnumerable<Application> MapListEntityToListDomain(IEnumerable<EfApplication> entities)
+        {
+            ICollection<Application> applications = new List<Application>();
+            foreach(var entity in entities)
+            {
+                applications.Add(MapEntityToDomain(entity));
+            }
+            return applications;
+        }
 
-
+        public static EfApplication MapDomainToEntity(Application domain)
+        {
+            DateTime.TryParse(domain.ApplicationDate, out DateTime appDate);
+            return new EfApplication
+            {
+                ApplicantId = domain.ApplicantId,
+                JobId = domain.JobId,
+                ApplicationDate = appDate
+            };
+        }
+        
     }
 }

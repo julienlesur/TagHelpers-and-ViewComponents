@@ -24,12 +24,29 @@ namespace Recruiting.Data.EfRepositories
             return newApplication;
         }
 
-        public async Task<IList<EfApplication>> GetApplicationListByJobReference(string jobReference)
+        public async Task DeleteAsync(int applicantId, int jobId)
+        {
+            var application = await _context.Applications.SingleOrDefaultAsync(app => app.ApplicantId == applicantId && app.JobId == jobId);
+            if (application != null)
+            {
+                _context.Remove(application);
+            }
+        }
+
+        public async Task<ICollection<EfApplication>> GetApplicationListByJobReference(string jobReference)
         =>
             await _context.Applications
                             .Include(app => app.Applicant)
                             .Include(app => app.Job)
                             .Where(app => app.Job.Reference == jobReference)
+                            .ToListAsync();
+
+        public async Task<ICollection<EfApplication>> GetListByIdApplicant(int applicantId)
+        =>
+            await _context.Applications
+                            .Where(app => app.ApplicantId == applicantId)
+                            .Include(app => app.Applicant)
+                            .Include(app => app.Job)
                             .ToListAsync();
     }
 }

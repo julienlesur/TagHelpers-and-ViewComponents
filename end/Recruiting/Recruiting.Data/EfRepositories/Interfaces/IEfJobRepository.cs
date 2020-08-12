@@ -1,4 +1,5 @@
 ﻿using Recruiting.Data.EfModels;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Recruiting.Data.EfRepositories.Interfaces
@@ -8,6 +9,7 @@ namespace Recruiting.Data.EfRepositories.Interfaces
         public Task<int> GetNumberOfApplicationsByJobReference(string jobReference);
         public bool IsReferenceUnique(int jobId, string reference);
         public Task<int> GetJobIdByReference(string jobReference);
-        Task<EfJob> GetJobByReference(string jobReference);
+        public Task<EfJob> GetJobByReference(string jobReference);
+        public Task<IEnumerable<EfJob>> GetJobsNotIn(List<int> idsJob);
     }
 }

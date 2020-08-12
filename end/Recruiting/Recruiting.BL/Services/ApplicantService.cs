@@ -5,6 +5,7 @@ using Recruiting.Data.EfModels;
 using Recruiting.Data.EfRepositories.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Recruiting.BL.Services
@@ -28,6 +29,7 @@ namespace Recruiting.BL.Services
             _efJobRepository = efJobRepository;
             _mapListEntityToListDomain = ApplicantMapper.MapListEntityToListDomain;
             _mapApplicationEntityToDomain = ApplicationMapper.MapEntityToDomain;
+
         }
 
         public async Task<Applicant> AddAsync(Applicant applicant, string jobReference)
