@@ -74,3 +74,19 @@ body {
     background-image:url('../Images/woman-falling-in-line-holding-each-other-1206059.jpg') !important;
     background-size:cover;
 }
+
+.list-group-item-short-list {
+    background-color: #7b8a7a !important;
+}
+    .list-group-item-short-list.active {
+        background-color: #7b8a2a !important;
+        border-color: #bfbf6c !important;
+    }
+        .list-group-item-short-list.active a {
+            color: #5B2B21 !important;
+            font-weight: bold;
+            font-size:medium;
+        }
+    .list-group-item-short-list:hover {
+        background-color: #6b8a7a !important;
+    }

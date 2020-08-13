@@ -6,10 +6,12 @@ using System.Text;
 
 namespace Recruiting.Infrastructures.TagHelpers
 {
-    [HtmlTargetElement("li", Attributes = "active-url-contains")]
+    [HtmlTargetElement("li", Attributes = "active-url, comparer-mode")]
     public class ActiveMenuTagHelper : TagHelper
     {
-        public string ActiveUrlContains {get; set;}
+        public string ActiveUrl {get; set;}
+        public string ComparerMode { get; set; }
+        private Func<bool> _urlComparer;
 
         private readonly IHttpContextAccessor _httpService;
 
@@ -17,15 +19,35 @@ namespace Recruiting.Infrastructures.TagHelpers
         {
             _httpService = httpService;
         }
+        public override void Init(TagHelperContext context)
+        {
+            if (ComparerMode?.ToLower() == "contains")
+            {
+                _urlComparer = DoesUrlContains;
+            }
+            else
+            {
+                _urlComparer = DoesUrlEndsWith;
+            }
+        }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (_httpService.HttpContext.Request.Path.ToString().Contains(ActiveUrlContains))
+            if (_urlComparer())
             {
                 var currentAttributes = output.Attributes["class"]?.Value;
                 output.Attributes.SetAttribute("class", 
                     currentAttributes.ToString() + " active");
             }
         }
+
+        private bool DoesUrlEndsWith()
+        =>
+            _httpService.HttpContext.Request.Path.ToString().EndsWith(ActiveUrl)
+            || _httpService.HttpContext.Request.Path.ToString().Contains(ActiveUrl + "?");
+
+        private bool DoesUrlContains()
+        =>
+            _httpService.HttpContext.Request.Path.ToString().Contains(ActiveUrl);
     }
 }
