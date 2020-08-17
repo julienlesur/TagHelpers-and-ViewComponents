@@ -77,10 +77,15 @@ body {
 
 .list-group-item-short-list {
     background-color: #7b8a7a !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color:white;
 }
     .list-group-item-short-list.active {
         background-color: #7b8a2a !important;
         border-color: #bfbf6c !important;
+        color: #5B2B21 !important;
     }
         .list-group-item-short-list.active a {
             color: #5B2B21 !important;

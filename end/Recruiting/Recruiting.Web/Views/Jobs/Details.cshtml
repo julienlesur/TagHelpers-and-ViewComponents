@@ -2,6 +2,10 @@
 @{
 }
 
+@section LeftMenu{
+    @await Component.InvokeAsync("JobsShortList", new { applicantId = Model.Job.JobId })
+}
+
 <h2>@Model.Job.Title - @Model.Job.Reference </h2>
 <div class="mb-2 mt-2">
     <div>
