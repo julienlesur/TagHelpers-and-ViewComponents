@@ -10,7 +10,7 @@ namespace Recruiting.Infrastructures.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (context.ActionArguments.TryGetValue("jobReference", out var jobReference))
+            if (context.ActionArguments.TryGetValue("jobReference", out var jobReference) && !String.IsNullOrEmpty(jobReference?.ToString()))
             {
                 var controller = context.Controller as Controller;
                 controller.ViewData["jobReference"] = jobReference.ToString();

@@ -24,8 +24,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var application in Model.Applications)
+            @if (Model.Applications.Count() == 0)
             {
+                <tr class="no-data-row">
+                    <td colspan="4" class="text-center">
+                        This applicant does not have any application.
+                    </td>
+                </tr>
+            }
+            else { 
+                @foreach (var application in Model.Applications)
+                {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => application.JobTitle)
@@ -46,6 +55,7 @@
                         </form>
                     </td>
                 </tr>
+                }
             }
         </tbody>
     </table>

@@ -51,6 +51,7 @@ function displayRowApplication(addedApplication) {
     var deleteForm = newRow.find('#delete-application');
     deleteForm.append('<input type="hidden" name="JobId" value="' + addedApplication.jobId + '" />');
 
+    removeNoDataRow();
     removeEditRow();
     $('#table-applications tbody').prepend(newRow);
 }
@@ -68,6 +69,10 @@ function deleteApplication($form) {
     });
 
 }
+
+function removeNoDataRow() {
+    $('#table-applications tr.no-data-row').remove();
+} 
 
 function removeEditRow() {
     $('#table-applications .sample-edit-row select#JobId').empty();

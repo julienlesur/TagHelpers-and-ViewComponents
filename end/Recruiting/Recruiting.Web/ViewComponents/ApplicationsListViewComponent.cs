@@ -28,7 +28,5 @@ namespace Recruiting.Web.ViewComponents
 
             return View(applicationList);
         }
-
-
     }
 }
