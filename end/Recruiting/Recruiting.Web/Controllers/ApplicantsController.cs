@@ -10,6 +10,7 @@ using Recruiting.Infrastructures.ActionFilters;
 
 namespace Recruiting.Web.Controllers
 {
+    [JobReference]
     public class ApplicantsController : Controller
     {
         private readonly IApplicantService _applicantService;
@@ -19,7 +20,6 @@ namespace Recruiting.Web.Controllers
             _applicantService = applicantService;
         }
 
-        [JobReference]
         public async Task<IActionResult> List(string jobReference)
         {
             IEnumerable<Applicant> applicants = await _applicantService.GetApplicantList(jobReference);
@@ -31,7 +31,7 @@ namespace Recruiting.Web.Controllers
             });
         }
 
-        [JobReference]
+
         public async Task<IActionResult> Details(int id, string jobReference)
         {
             Applicant applicant = await _applicantService.FindByIdAsync(id);
@@ -43,7 +43,6 @@ namespace Recruiting.Web.Controllers
         }
 
 
-        [JobReference]
         public IActionResult Add(string jobReference)
         {
             return View("Edit", Applicant._EmptyApplicant);
@@ -62,7 +61,6 @@ namespace Recruiting.Web.Controllers
             return View("Edit", new { id = applicant.ApplicantId, jobReference = jobReference });
         }
 
-        [JobReference]
         public async Task<IActionResult> Edit(int id, string jobReference)
         {
             var applicant = await _applicantService.FindByIdAsync(id);
